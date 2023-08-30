@@ -1,12 +1,12 @@
-package Week1;
+package Week2;
 
 import java.util.Scanner;
 
-public class Main {
+public class TodoUI {
+    private Scanner sc = new Scanner(System.in);
+    private TodoManager todoManager = new TodoManager();
 
-    public static void main(String[] args) {
-        ToDoDAO td = new ToDoDAO();
-        Scanner sc = new Scanner(System.in);
+    public void run() {
         int num;
 
         do {
@@ -18,15 +18,15 @@ public class Main {
                 switch (num) {
                     case 1:
                         System.out.print("추가할 일을 입력하세요: ");
-                        td.add();
+                        todoManager.add(sc.nextLine());
                         break;
                     case 2:
                         System.out.print("삭제할 일의 ID를 입력하세요: ");
-                        td.remove(Integer.parseInt(sc.nextLine()));
+                        todoManager.remove(Integer.parseInt(sc.nextLine()));
                         break;
                     case 3:
                         System.out.print("조회할 할 일의 ID를 입력하세요: ");
-                        td.select(Integer.parseInt(sc.nextLine()));
+                        todoManager.select(Integer.parseInt(sc.nextLine()));
                         break;
                     case 4:
                         System.out.println("종료");
@@ -40,8 +40,5 @@ public class Main {
             }
 
         } while (num != 4);
-
-        sc.close();
     }
-
 }
