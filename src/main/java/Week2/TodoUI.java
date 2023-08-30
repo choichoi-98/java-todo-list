@@ -7,38 +7,34 @@ public class TodoUI {
     private TodoManager todoManager = new TodoManager();
 
     public void run() {
-        int num;
+       Option option;
 
         do {
             System.out.println("옵션을 선택하세요: 1.추가, 2.삭제, 3.조회, 4.종료");
+            String input = sc.nextLine();
+            option = Option.fromValue(input);
 
-            try {
-                num = Integer.parseInt(sc.nextLine());
-
-                switch (num) {
-                    case 1:
-                        System.out.print("추가할 일을 입력하세요: ");
-                        todoManager.add(sc.nextLine());
-                        break;
-                    case 2:
-                        System.out.print("삭제할 일의 ID를 입력하세요: ");
-                        todoManager.remove(Integer.parseInt(sc.nextLine()));
-                        break;
-                    case 3:
-                        System.out.print("조회할 할 일의 ID를 입력하세요: ");
-                        todoManager.select(Integer.parseInt(sc.nextLine()));
-                        break;
-                    case 4:
-                        System.out.println("종료");
-                        break;
-                    default:
-                        System.out.println("잘못된 입력입니다.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("잘못된 형식입니다. 숫자를 입력해주세요.");
-                num = 0; // Reset num to loop again
+            switch (option) {
+                case ADD:
+                    System.out.print("추가할 일을 입력하세요: ");
+                    todoManager.add(sc.nextLine());
+                    break;
+                case REMOVE:
+                    System.out.print("삭제할 일의 ID를 입력하세요: ");
+                    todoManager.remove(Integer.parseInt(sc.nextLine()));
+                    break;
+                case SELECT:
+                    System.out.print("조회할 할 일의 ID를 입력하세요: ");
+                    todoManager.select(Integer.parseInt(sc.nextLine()));
+                    break;
+                case QUIT:
+                    System.out.println("종료");
+                    break;
+                case INVALID:
+                    System.out.println("잘못된 입력입니다.");
+                    break;
             }
 
-        } while (num != 4);
+        } while (option != Option.QUIT);
     }
 }
