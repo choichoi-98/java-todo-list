@@ -28,4 +28,14 @@ public class TodoManager {
             System.out.println("할 일 ID:" + todo_num + " 내용:" + getTodo);
 
     }
+
+    public void done(int todo_num) {
+        String todo = todo_list.get(todo_num); //기존의 키 값(할 일)
+        if(todo != null){
+            String todo_done = todo + "[완료]";// 수정된 키 값 (할 일 [완료])
+            todo_list.put(todo_num, todo_done); //수정된 값 저장
+        } else{
+            System.out.println("해당 ID의 할 일이 없습니다.");
+        }
+    }
 }

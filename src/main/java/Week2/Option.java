@@ -2,9 +2,10 @@ package Week2;
 
 public enum Option {
     ADD("1"),
-    REMOVE("2"),
-    SELECT("3"),
-    QUIT("4"),
+    DONE("2"),
+    REMOVE("3"),
+    SELECT("4"),
+    QUIT("5"),
     INVALID("");
 
     private final String value;
