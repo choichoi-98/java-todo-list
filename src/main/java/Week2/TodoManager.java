@@ -13,20 +13,19 @@ public class TodoManager {
     }
 
     public void remove(int todo_num) {
-        if (!todo_list.containsKey(todo_num)) {
-            System.out.println("해당 ID의 할 일이 없습니다.");
-        } else {
+        if (todo_list.containsKey(todo_num)) {
             todo_list.remove(todo_num);
             System.out.println("할 일이 삭제되었습니다. ID: " + todo_num);
+        } else {
+            System.out.println("해당 ID의 할 일이 없습니다.");
         }
+
     }
 
     public void select(int todo_num) {
-        String getTodo = todo_list.getOrDefault(todo_num, null);
-        if (getTodo == null) {
-            System.out.println("해당 ID의 할 일이 없습니다.");
-        } else {
+        String getTodo = todo_list.getOrDefault(todo_num, "해당 ID의 할 일이 없습니다.");
+
             System.out.println("할 일 ID:" + todo_num + " 내용:" + getTodo);
-        }
+
     }
 }
