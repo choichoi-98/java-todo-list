@@ -10,7 +10,7 @@ public class TodoUI {
        Option option;
 
         do {
-            System.out.println("옵션을 선택하세요: 1.추가, 2.완료, 3.삭제, 4.조회, 5.종료");
+            System.out.println("옵션을 선택하세요: 1.추가, 2.완료, 3.삭제, 4.조회(ID), 5.조회(전체), 6.종료");
             String input = sc.nextLine();
             option = Option.fromValue(input);
 
@@ -26,6 +26,7 @@ public class TodoUI {
                     }catch (NumberFormatException e) {
                         System.out.println("잘못된 입력입니다. 숫자를 입력하세요");
                     }
+                    break;
                 case REMOVE:
                     try{
                         System.out.print("삭제할 일의 ID를 입력하세요: ");
@@ -41,6 +42,9 @@ public class TodoUI {
                     } catch(NumberFormatException e) {
                         System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
                     }
+                    break;
+                case SELECTLIST:
+                        todoManager.selectList();
                     break;
                 case QUIT:
                     System.out.println("종료");

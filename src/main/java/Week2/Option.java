@@ -5,7 +5,8 @@ public enum Option {
     DONE("2"),
     REMOVE("3"),
     SELECT("4"),
-    QUIT("5"),
+    SELECTLIST("5"),
+    QUIT("6"),
     INVALID("");
 
     private final String value;
