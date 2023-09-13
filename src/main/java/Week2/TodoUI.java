@@ -1,5 +1,6 @@
 package Week2;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TodoUI {
@@ -10,7 +11,8 @@ public class TodoUI {
        Option option;
 
         do {
-            System.out.println("옵션을 선택하세요: 1.추가, 2.완료, 3.삭제, 4.조회(ID), 5.조회(전체), 6.종료");
+            System.out.println
+                    ("옵션을 선택하세요: 1.추가, 2.완료, 3.삭제, 4.조회(ID), 5.조회(전체), 6.조회(정렬) 7.종료");
             String input = sc.nextLine();
             option = Option.fromValue(input);
 
@@ -45,6 +47,21 @@ public class TodoUI {
                     break;
                 case SELECTLIST:
                         todoManager.selectList();
+                    break;
+                case SELECTSORT:
+                    try {
+                        System.out.println("1: 오래된순 2: 최신순");
+                        int sortOption = Integer.parseInt(sc.nextLine());
+                        if (sortOption == 1) {
+                            todoManager.sortByOldest();
+                        } else if (sortOption == 2) {
+                            todoManager.sortByNewest();
+                        } else {
+                            System.out.println("잘못된 입력입니다. 1 또는 2를 입력하세요.");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
+                    }
                     break;
                 case QUIT:
                     System.out.println("종료");

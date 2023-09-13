@@ -1,16 +1,15 @@
 package Week2;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class TodoManager {
-    Status status;
+    StatusEnum status;
     private int todo_num = 1;
-    private HashMap<Integer, String> todo_list = new HashMap<>();
+    private HashMap<Integer, Todo> todo_list = new HashMap<>();
 
     public void add(String text) {
-        todo_list.put(todo_num, text );
+        Todo todo = new Todo(text);
+        todo_list.put(todo_num,todo);
         System.out.println("할 일이 추가 되었습니다. ID: " + todo_num );
         todo_num++;
     }
@@ -26,37 +25,98 @@ public class TodoManager {
     }
 
     public void select(int todo_num) {
-        String getTodo = todo_list.getOrDefault(todo_num, "해당 ID의 할 일이 없습니다.");
-
+        String getTodo = String.valueOf(todo_list.get(todo_num));
+        if(todo_list.get(todo_num)==null){
+            System.out.println("해당 ID의 할 일이 없습니다.");
+        }else{
             System.out.println("할 일 ID:" + todo_num + " 내용:" + getTodo);
+        }
+
 
     }
 
-    public void done(int todo_num) {
-        String todo = todo_list.get(todo_num); //기존의 키의 값(할 일)
-        if(todo != null){
-            String todo_done = todo + "[완료]";// 수정된 키의 값 (할 일 [완료])
-            todo_list.put(todo_num, todo_done); //수정된 값 저장
-        } else{
+    public int done(int todo_num) {
+        Todo todo = todo_list.get(todo_num);
+
+        if (todo == null) {
             System.out.println("해당 ID의 할 일이 없습니다.");
+        } else {
+            if (todo.getStatus().isProgress()) {
+                todo_list.get(todo_num).done();
+                System.out.println("할 일 ID:" + todo_num + "를 완료 처리했습니다.");
+            } else if (todo.getStatus().isDone()) {
+                System.out.println("이미 완료한 할 일 입니다.");
+            }
         }
+
+        return todo_num;
     }
 
     public void selectList() {
-
-
-        if(!todo_list.isEmpty()){
-            Set< Map.Entry<Integer,String>> todo_list_all = todo_list.entrySet();
+        if (!todo_list.isEmpty()) {
+            Set<Map.Entry<Integer, Todo>> todo_list_all = todo_list.entrySet();
             System.out.println("ID     할 일 ");
-            for(Map.Entry<Integer,String> todo_list_all1 : todo_list_all){
+            for (Map.Entry<Integer, Todo> todo_list_all1 : todo_list_all) {
                 int key = todo_list_all1.getKey();
-                String value = todo_list_all1.getValue();
+                Todo value = todo_list_all1.getValue();
+                String status = value.getStatus().getStatus();
+                String content = value.getContent();
 
-                System.out.println(key + "   " + value);
+                System.out.println(key + "   " + content + status);
             }
-        }else{
+        } else {
             System.out.print("할 일이 없습니다.");
         }
-
     }
+
+
+    public void sortByOldest() {
+        List<Map.Entry<Integer, Todo>> entries = new ArrayList<>(todo_list.entrySet());
+
+        Collections.sort(entries, new Comparator<Map.Entry<Integer, Todo>>() {
+            @Override
+            public int compare(Map.Entry<Integer, Todo> entry1, Map.Entry<Integer, Todo> entry2) {
+                return entry1.getValue().getCreatedAt().compareTo(entry2.getValue().getCreatedAt());
+            }
+        });
+
+        LinkedHashMap<Integer, Todo> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<Integer, Todo> entry : entries) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        todo_list = sortedMap;
+
+        // 정렬된 결과를 출력
+        System.out.println("오래된 순으로 정렬된 할 일 목록:");
+        for (Map.Entry<Integer, Todo> entry : todo_list.entrySet()) {
+            System.out.println("ID: " + entry.getKey() + ", 할 일: " + entry.getValue().getContent());
+        }
+    }
+
+    // 최신 순으로 정렬
+    public void sortByNewest() {
+        List<Map.Entry<Integer, Todo>> entries = new ArrayList<>(todo_list.entrySet());
+
+        Collections.sort(entries, new Comparator<Map.Entry<Integer, Todo>>() {
+            @Override
+            public int compare(Map.Entry<Integer, Todo> entry1, Map.Entry<Integer, Todo> entry2) {
+                return entry2.getValue().getCreatedAt().compareTo(entry1.getValue().getCreatedAt());
+            }
+        });
+
+        LinkedHashMap<Integer, Todo> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<Integer, Todo> entry : entries) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        todo_list = sortedMap;
+
+        // 정렬된 결과를 출력
+        System.out.println("최신 순으로 정렬된 할 일 목록:");
+        for (Map.Entry<Integer, Todo> entry : todo_list.entrySet()) {
+            System.out.println("ID: " + entry.getKey() + ", 할 일: " + entry.getValue().getContent());
+        }
+    }
+
 }
