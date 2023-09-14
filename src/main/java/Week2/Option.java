@@ -7,7 +7,8 @@ public enum Option {
     SELECT("4"),
     SELECTLIST("5"),
     SELECTSORT("6"),
-    QUIT("7"),
+    SEARCH("7"),
+    QUIT("8"),
     INVALID("");
 
     private final String value;

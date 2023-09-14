@@ -12,7 +12,8 @@ public class TodoUI {
 
         do {
             System.out.println
-                    ("옵션을 선택하세요: 1.추가, 2.완료, 3.삭제, 4.조회(ID), 5.조회(전체), 6.조회(정렬) 7.종료");
+                    ("옵션을 선택하세요: 1.추가, 2.완료, 3.삭제, 4.조회(ID), 5.조회(전체), 6.조회(정렬)" +
+                            " 7.검색(키워드) 8.종료");
             String input = sc.nextLine();
             option = Option.fromValue(input);
 
@@ -62,6 +63,11 @@ public class TodoUI {
                     } catch (NumberFormatException e) {
                         System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
                     }
+                    break;
+                case SEARCH:
+                    System.out.println("키워드를 입력해주세요");
+                    String keyword = sc.nextLine();
+                    todoManager.search(keyword);
                     break;
                 case QUIT:
                     System.out.println("종료");

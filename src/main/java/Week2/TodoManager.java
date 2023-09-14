@@ -119,4 +119,22 @@ public class TodoManager {
         }
     }
 
+    public void search(String keyword) {
+        boolean found = false;
+
+        for(Map.Entry<Integer,Todo> entry : todo_list.entrySet()){
+            int key = entry.getKey();
+            Todo value = entry.getValue();
+
+            if(value.getContent().contains(keyword)){
+                String status = value.getStatus().getStatus();
+                System.out.println("ID: " + key + ", 할 일 : " + value.getContent() + status);
+                found = true;
+            }
+
+            if(!found){
+                System.out.println("검색 결과가 없습니다.");
+            }
+        }
+    }
 }
